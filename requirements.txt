@@ -4,6 +4,6 @@ extract_msg
 urllib3
 requests
 dnspython
-email
 dkimpy
 cryptography
+email
