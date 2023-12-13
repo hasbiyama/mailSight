@@ -28,7 +28,7 @@ def main():
         sys.exit(1)
 
     file_path = sys.argv[1]
-    safelink_option = "-orgurl" in sys.argv[2:]
+    safelink_option = "-orgurl" in sys.argv[3:]
 
     _, file_extension = os.path.splitext(file_path)
     file_extension = file_extension.lower()
@@ -52,7 +52,7 @@ def main():
     print_email_addresses()
 
 def print_usage():
-    print("\n>> Usage: " + sys.argv[0] + " <.msg/.eml/.txt path> [-orgurl] <outputFolder>\n")
+    print("\n>> Usage: " + sys.argv[0] + " <.msg/.eml/.txt path> <outputFolder> [-orgurl] \n")
 
 def print_headers():
     print("\n<=========================================>\n")

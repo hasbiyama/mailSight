@@ -6,12 +6,12 @@
 """
 from req_imports import *
 
-# Check if there are enough command-line arguments
 if len(sys.argv) >= 3:
-    # Set TEMP_FOLDER based on the value of argv[2]
+    if sys.argv[2] == "-orgurl":
+        print("\n[!] Please input the target folder first.")
+        sys.exit(1)
     TEMP_FOLDER = sys.argv[2]
 else:
-    # If argv[2] is not provided, use the default value
     TEMP_FOLDER = "temp"
 
 # List to store all email addresses

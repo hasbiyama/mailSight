@@ -13,21 +13,21 @@ def check_spf(sender_domain, return_path):
     try:
         spf_query = dns.resolver.resolve(sender_domain, 'TXT')
         spf_records = [txt_record.to_text() for txt_record in spf_query]
-        
+
         if not check_internet_connection():
             return "\n[-] Unable to connect to the internet. Skipping SPF check."
 
         for spf_text in spf_records:
             if "v=spf1" in spf_text:
-                if "all" in spf_text and return_path.endswith(sender_domain):
-                    return f"[+] SPF Passed: Sender is authorized and aligned ({sender_domain})"
-                elif "all" in spf_text and not return_path.endswith(sender_domain):
-                    return f"[-] SPF Failed: Sender is authorized but not aligned ({sender_domain})"
-                else:
-                    return f"[-] SPF Failed: Sender is not authorized and not aligned {sender_domain}"
-        
+                mechanisms = ("all", "include", "a", "mx", "redirect")
+                if any(mechanism in spf_text for mechanism in mechanisms):
+                    if return_path.endswith(sender_domain):
+                        return f"[+] SPF Passed: Sender is authorized and aligned ({sender_domain})"
+                    else:
+                        return f"[-] SPF Failed: Sender is authorized but not aligned ({sender_domain})"
+
         return "[-] SPF Failed: No SPF record found"
-    
+
     except dns.resolver.NXDOMAIN:
         return f"[-] DNS record not found for {sender_domain}"
     except dns.resolver.NoAnswer:
@@ -207,11 +207,11 @@ def check_dmarc_policy(domain):
 
             # Perform comprehensive policy checks
             if policy_value == 'reject':
-                return "\n[+] DMARC policy is 'reject'"
+                return f"\n[+] DMARC policy is 'reject' ({domain})"
             elif policy_value == 'quarantine':
-                return "\n[+] DMARC policy is 'quarantine'"
+                return f"\n[+] DMARC policy is 'quarantine' ({domain})"
             elif policy_value == 'none':
-                return "\n[-] DMARC policy is 'none'"
+                return f"\n[+] DMARC policy is 'none' ({domain})"
             else:
                 return "\n[-] Unknown DMARC policy found in DNS"
 

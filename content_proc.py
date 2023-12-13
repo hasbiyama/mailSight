@@ -7,7 +7,7 @@
 
 from constants import *
 from req_imports import *
-from help_func import remove_equals_and_newlines
+from help_func import remove_equals_and_newlines, remove_safelink
 
 def extract_urls(text, safelink_option):
 
