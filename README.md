@@ -36,7 +36,7 @@ python3 mailSight.py
                 <( github.com/hasbiyama )>
 
 
->> Usage: mailSight.py <.msg/.eml/.txt path> [-orgurl] <outputFolder>
+>> Usage: mailSight.py <.msg/.eml/.txt path> <outputFolder> [-orgurl]
 
 ```
 
